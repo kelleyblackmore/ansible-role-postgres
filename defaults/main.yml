@@ -6,7 +6,9 @@ postgresql_enablerepo: ""
 # `restarted` or `reloaded`
 postgresql_restarted_state: "restarted"
 
-postgresql_python_library: python-psycopg2
+# Library used by Ansible to communicate with PostgreSQL.
+# Use python3-psycopg2 for Python 3 environments
+postgresql_python_library: python3-psycopg2
 postgresql_user: postgres
 postgresql_group: postgres
 
@@ -20,6 +22,8 @@ postgresql_service_enabled: true
 postgresql_global_config_options:
   - option: unix_socket_directories
     value: '{{ postgresql_unix_socket_directories | join(",") }}'
+  - option: shared_preload_libraries
+    value: 'pg_stat_statements'
 
 # Host based authentication (hba) entries to be added to the pg_hba.conf. This
 # variable's defaults reflect the defaults that come with a fresh installation.

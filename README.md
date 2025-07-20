@@ -11,6 +11,25 @@ No special requirements; note that this role requires root access, so either run
         - role: ansible-role-postgres
           become: yes
 
+## Supported Platforms
+
+### Operating Systems
+- **Ubuntu**: 14.04, 16.04, 18.04, 20.04 LTS, 22.04 LTS, 24.04 LTS
+- **Debian**: 7, 8, 9, 10, 11, 12
+- **RHEL/CentOS**: 6, 7, 8, 9
+
+### PostgreSQL Versions
+- **Ubuntu 24.04**: PostgreSQL 16
+- **Ubuntu 22.04**: PostgreSQL 14
+- **Ubuntu 20.04**: PostgreSQL 12
+- **Ubuntu 18.04**: PostgreSQL 10
+- **Debian 12**: PostgreSQL 15
+- **Debian 11**: PostgreSQL 13
+- **RHEL/CentOS 9**: PostgreSQL 13
+- **RHEL/CentOS 8**: PostgreSQL 10
+
+**Note**: Older PostgreSQL versions (9.x) are End-of-Life and no longer supported by the PostgreSQL community. Consider upgrading to supported versions.
+
 ## Role Variables
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
@@ -23,9 +42,9 @@ Available variables are listed below, along with default values (see `defaults/m
 
 Set the state of the service when configuration changes are made. Recommended values are `restarted` or `reloaded`.
 
-    postgresql_python_library: python-psycopg2
+    postgresql_python_library: python3-psycopg2
 
-Library used by Ansible to communicate with PostgreSQL. If you are using Python 3 (e.g. set via `ansible_python_interpreter`), you should change this to `python3-psycopg2`.
+Library used by Ansible to communicate with PostgreSQL. Defaults to Python 3 compatible library. For older systems still using Python 2, set this to `python-psycopg2`.
 
     postgresql_user: postgres
     postgresql_group: postgres
@@ -45,8 +64,10 @@ Control the state of the postgresql service and whether it should start at boot 
     postgresql_global_config_options:
       - option: unix_socket_directories
         value: '{{ postgresql_unix_socket_directories | join(",") }}'
+      - option: shared_preload_libraries
+        value: 'pg_stat_statements'
 
-Global configuration options that will be set in `postgresql.conf`. Note that for RHEL/CentOS 6 (or very old versions of PostgreSQL), you need to at least override this variable and set the `option` to `unix_socket_directory`.
+Global configuration options that will be set in `postgresql.conf`. The default configuration includes `pg_stat_statements` for query performance monitoring. Note that for RHEL/CentOS 6 (or very old versions of PostgreSQL), you need to at least override this variable and set the `option` to `unix_socket_directory`.
 
     postgresql_hba_entries:
       - { type: local, database: all, user: postgres, auth_method: peer }
@@ -133,6 +154,31 @@ None.
     postgresql_users:
       - name: example_user
         password: supersecure
+
+## Recent Updates
+
+### v2024.1
+- **Fixed**: Renamed misspelled `intialize.yml` to `initialize.yml`
+- **Updated**: Replaced deprecated `with_items` with `loop` syntax throughout
+- **Added**: Support for newer OS versions:
+  - Ubuntu 20.04, 22.04, 24.04 LTS
+  - Debian 10, 11, 12
+  - RHEL/CentOS 8, 9
+- **Updated**: Default Python library to `python3-psycopg2` for modern Python 3 environments
+- **Added**: `pg_stat_statements` to default shared preload libraries for better monitoring
+- **Improved**: Documentation with supported PostgreSQL versions per OS
+
+### Breaking Changes
+- Default `postgresql_python_library` changed from `python-psycopg2` to `python3-psycopg2`
+- If you're still using Python 2, explicitly set: `postgresql_python_library: python-psycopg2`
+
+## Security Considerations
+
+- Keep PostgreSQL updated to supported versions (13+)
+- Use strong passwords for database users
+- Restrict network access via `postgresql_hba_entries`
+- Consider enabling SSL/TLS for remote connections
+- Regularly review and audit database permissions
 
 ## License
 

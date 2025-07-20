@@ -1,0 +1,40 @@
+---
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+platforms:
+  - name: instance-ubuntu-22
+    image: quay.io/ansible/molecule-ubuntu:22.04
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    command: "/lib/systemd/systemd"
+  
+  - name: instance-debian-12
+    image: quay.io/ansible/molecule-debian:12
+    pre_build_image: true
+    privileged: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+    cgroupns_mode: host
+    command: "/lib/systemd/systemd"
+
+provisioner:
+  name: ansible
+  inventory:
+    host_vars:
+      instance-ubuntu-22:
+        postgresql_databases:
+          - name: test_db
+        postgresql_users:
+          - name: test_user
+            password: test_password
+            db: test_db
+
+verifier:
+  name: ansible

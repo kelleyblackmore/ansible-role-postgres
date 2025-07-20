@@ -1,0 +1,44 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: false
+  tasks:
+    - name: Check if PostgreSQL is running
+      service:
+        name: postgresql
+        state: started
+      check_mode: true
+      register: postgresql_service
+
+    - name: Verify PostgreSQL service is running
+      assert:
+        that:
+          - not postgresql_service.changed
+        fail_msg: "PostgreSQL service is not running"
+
+    - name: Check PostgreSQL version
+      command: psql --version
+      register: postgresql_version_check
+      become_user: postgres
+      changed_when: false
+
+    - name: Verify PostgreSQL version output
+      assert:
+        that:
+          - postgresql_version_check.stdout is search("psql")
+        fail_msg: "PostgreSQL version check failed"
+
+    - name: Test database connection
+      postgresql_query:
+        login_user: postgres
+        login_unix_socket: /var/run/postgresql
+        query: "SELECT version();"
+      register: db_connection_test
+      become_user: postgres
+
+    - name: Verify database connection
+      assert:
+        that:
+          - db_connection_test.query_result is defined
+        fail_msg: "Database connection test failed"

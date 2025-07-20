@@ -1,0 +1,41 @@
+---
+galaxy_info:
+  role_name: postgresql
+  author: Kris Kelley
+  description: Installs and configures PostgreSQL server on RHEL/CentOS or Debian/Ubuntu servers
+  company: 
+  license: MIT
+  min_ansible_version: '2.9'
+  
+  platforms:
+    - name: Ubuntu
+      versions:
+        - bionic   # 18.04
+        - focal    # 20.04
+        - jammy    # 22.04
+        - noble    # 24.04
+    - name: Debian
+      versions:
+        - stretch  # 9
+        - buster   # 10
+        - bullseye # 11
+        - bookworm # 12
+    - name: EL
+      versions:
+        - '7'
+        - '8'
+        - '9'
+    - name: Fedora
+      versions:
+        - all
+
+  galaxy_tags:
+    - database
+    - postgresql
+    - postgres
+    - sql
+    - rdbms
+    - server
+    - development
+
+dependencies: []

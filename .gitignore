@@ -1,3 +1,29 @@
+# Ansible
 *.retry
 */__pycache__
 *.pyc
+*.pyo
+
+# Testing
+.tox/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Virtual environments
+venv/
+.env
+
+# Vagrant
+.vagrant/
