@@ -1,0 +1,23 @@
+# Set default behavior for files not handled below
+* text=auto
+
+# Ansible files
+*.yml text eol=lf
+*.yaml text eol=lf
+*.j2 text eol=lf
+
+# Scripts
+*.sh text eol=lf
+
+# Documentation
+*.md text eol=lf
+*.txt text eol=lf
+
+# Configuration files
+*.ini text eol=lf
+*.cfg text eol=lf
+*.conf text eol=lf
+
+# Make sure shell scripts are executable
+*.sh text eol=lf
+Makefile text eol=lf

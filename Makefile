@@ -74,6 +74,9 @@ galaxy-info: ## Show role information
 check-syntax: ## Check Ansible syntax
 	ansible-playbook --syntax-check molecule/default/converge.yml
 
+test-local: ## Run local test script
+	./test-local.sh
+
 # Development shortcuts
 dev-setup: setup ## Setup development environment with additional tools
 	pip install pre-commit

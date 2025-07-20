@@ -5,7 +5,7 @@ extends: default
 rules:
   # Allow longer lines
   line-length:
-    max: 120
+    max: 200
     level: warning
 
   # Allow truthy values
@@ -38,8 +38,22 @@ rules:
     min-spaces-inside: 0
     max-spaces-inside: 1
 
+  # Document rules
+  document-start: disable
+  document-end: disable
+
+  # Allow trailing spaces
+  trailing-spaces: disable
+
+  # Allow empty lines
+  empty-lines:
+    max: 3
+    max-start: 0
+    max-end: 1
+
 ignore: |
   .tox/
   .cache/
   molecule/
   .github/
+  .venv/

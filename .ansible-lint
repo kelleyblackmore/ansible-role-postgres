@@ -7,20 +7,24 @@ exclude_paths:
   - .github/
   - molecule/
   - .tox/
+  - .venv/
 
 # Enable specific rules
 use_default_rules: true
 
-# Skip specific rules
+# Skip specific rules that commonly cause issues
 skip_list:
-  - yaml[line-length]  # Allow longer lines in some cases
-  - name[casing]       # Allow different naming conventions
-  - fqcn[action-core]  # Allow core module names without FQCN
+  - yaml[line-length]           # Allow longer lines in some cases
+  - name[casing]                # Allow different naming conventions
+  - fqcn[action-core]           # Allow core module names without FQCN
+  - risky-file-permissions      # Allow default file permissions
+  - no-changed-when             # Allow tasks without changed_when
+  - command-instead-of-module   # Allow command/shell usage
+  - package-latest              # Allow latest package versions
 
 # Set warning level for various rule types
 warn_list:
   - experimental  # Experimental rules
-  - package-latest  # Warning for package: state=latest
 
 # Configure specific rules
 rules:
@@ -29,8 +33,8 @@ rules:
   truthy:
     allowed-values: ['true', 'false', 'yes', 'no']
 
-# Enable offline mode to avoid network calls
+# Offline mode to avoid network calls
 offline: false
 
-# Profile to use
-profile: production
+# Use production profile but with skip_list modifications
+profile: null

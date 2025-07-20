@@ -38,3 +38,6 @@ env/
 # CI artifacts
 *.log
 .github/workflows/*.log
+
+# Local test artifacts
+test-results/
