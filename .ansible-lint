@@ -12,15 +12,11 @@ exclude_paths:
 # Enable specific rules
 use_default_rules: true
 
-# Skip specific rules that commonly cause issues
+# Skip specific rules that are acceptable for this role
 skip_list:
   - yaml[line-length]           # Allow longer lines in some cases
   - name[casing]                # Allow different naming conventions
-  - fqcn[action-core]           # Allow core module names without FQCN
-  - risky-file-permissions      # Allow default file permissions
-  - no-changed-when             # Allow tasks without changed_when
-  - command-instead-of-module   # Allow command/shell usage
-  - package-latest              # Allow latest package versions
+  - package-latest              # Allow latest package versions for simplicity
 
 # Set warning level for various rule types
 warn_list:
@@ -29,12 +25,12 @@ warn_list:
 # Configure specific rules
 rules:
   line-length:
-    max: 120
+    max: 200
   truthy:
     allowed-values: ['true', 'false', 'yes', 'no']
 
 # Offline mode to avoid network calls
 offline: false
 
-# Use production profile but with skip_list modifications
-profile: null
+# Use production profile with our customizations
+profile: production

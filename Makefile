@@ -12,8 +12,7 @@ help: ## Show this help message
 setup: ## Install development dependencies
 	@echo "Setting up development environment..."
 	pip install -r requirements.txt
-	ansible-galaxy collection install community.general
-	ansible-galaxy collection install ansible.posix
+	ansible-galaxy collection install -r requirements.yml
 
 install: setup ## Alias for setup
 
@@ -70,6 +69,9 @@ galaxy-install: ## Install role from Ansible Galaxy
 
 galaxy-info: ## Show role information
 	ansible-galaxy info geerlingguy.postgresql
+
+collections: ## Install required collections
+	ansible-galaxy collection install -r requirements.yml
 
 check-syntax: ## Check Ansible syntax
 	ansible-playbook --syntax-check molecule/default/converge.yml

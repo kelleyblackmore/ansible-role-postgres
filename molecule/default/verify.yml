@@ -43,7 +43,7 @@
         that:
           - postgresql_version_check.stdout is search("psql")
         fail_msg: "PostgreSQL version check failed"
-      when: 
+      when:
         - psql_exists.rc == 0
         - postgresql_version_check is defined
 
@@ -58,6 +58,6 @@
     - name: Show PostgreSQL connectivity result
       ansible.builtin.debug:
         var: db_connection_test.stdout
-      when: 
+      when:
         - psql_exists.rc == 0
         - db_connection_test is defined

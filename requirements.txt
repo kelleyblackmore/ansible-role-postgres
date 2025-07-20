@@ -20,3 +20,7 @@ docker>=5.0,<7.0
 # Utilities
 jinja2>=2.11,<4.0
 packaging>=20.0
+
+# Collections (note: these are installed separately via ansible-galaxy)
+# community.general - for locale_gen
+# community.postgresql - for postgresql_db and postgresql_user

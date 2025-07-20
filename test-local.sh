@@ -9,6 +9,9 @@ echo "📋 Installing dependencies..."
 pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
+echo "📦 Installing Ansible collections..."
+ansible-galaxy collection install -r requirements.yml
+
 echo "🔍 Checking YAML syntax..."
 python3 -c "
 import yaml
