@@ -9,6 +9,12 @@
 .pytest_cache/
 .coverage
 htmlcov/
+bandit-report.json
+trivy-results.sarif
+
+# Molecule
+molecule/*/.*
+.cache/
 
 # IDE
 .vscode/
@@ -24,6 +30,11 @@ Thumbs.db
 # Virtual environments
 venv/
 .env
+env/
 
 # Vagrant
 .vagrant/
+
+# CI artifacts
+*.log
+.github/workflows/*.log

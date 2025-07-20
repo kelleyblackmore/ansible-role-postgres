@@ -1,5 +1,9 @@
 # Ansible Role: PostgreSQL
 
+[![CI](https://github.com/username/ansible-role-postgresql/workflows/CI/badge.svg)](https://github.com/username/ansible-role-postgresql/actions)
+[![Security Scan](https://github.com/username/ansible-role-postgresql/workflows/Security%20Scan/badge.svg)](https://github.com/username/ansible-role-postgresql/actions)
+[![Ansible Galaxy](https://img.shields.io/ansible/role/d/username.postgresql)](https://galaxy.ansible.com/username/postgresql)
+
 Installs and configures PostgreSQL server on RHEL/CentOS or Debian/Ubuntu servers.
 
 ## Requirements
@@ -137,6 +141,41 @@ OS-specific variables that are set by include files in this role's `vars` direct
 ## Dependencies
 
 None.
+
+## Development
+
+### Local Testing
+
+This role includes comprehensive testing with Molecule, Ansible Lint, and security scanning.
+
+```bash
+# Install development dependencies
+make setup
+
+# Run all tests
+make test
+
+# Run linting only  
+make lint
+
+# Run molecule tests
+make molecule
+
+# Run security checks
+make security
+```
+
+### CI/CD Pipeline
+
+The role includes a complete CI/CD pipeline with:
+
+- **Ansible Lint**: Code quality and best practices validation
+- **YAML Lint**: YAML syntax and formatting checks  
+- **Molecule Testing**: Multi-distribution integration testing
+- **Security Scanning**: Vulnerability and dependency scanning
+- **Automated Publishing**: Automatic Ansible Galaxy publishing on releases
+
+See [docs/CI_CD.md](docs/CI_CD.md) for detailed CI/CD documentation.
 
 ## Example Playbook
 

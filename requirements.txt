@@ -1,0 +1,22 @@
+# Ansible and core dependencies
+ansible>=4.0,<8.0
+ansible-core>=2.11,<2.16
+
+# Linting and code quality
+ansible-lint>=6.0
+yamllint>=1.26
+
+# Testing framework
+molecule>=4.0
+molecule-plugins[docker]>=23.0
+
+# Additional testing dependencies
+pytest>=6.0
+pytest-ansible>=3.0
+
+# Docker support
+docker>=5.0
+
+# Utilities
+jinja2>=2.11
+packaging

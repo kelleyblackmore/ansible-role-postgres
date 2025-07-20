@@ -1,0 +1,36 @@
+---
+# .ansible-lint
+
+# Exclude certain paths
+exclude_paths:
+  - .cache/
+  - .github/
+  - molecule/
+  - .tox/
+
+# Enable specific rules
+use_default_rules: true
+
+# Skip specific rules
+skip_list:
+  - yaml[line-length]  # Allow longer lines in some cases
+  - name[casing]       # Allow different naming conventions
+  - fqcn[action-core]  # Allow core module names without FQCN
+
+# Set warning level for various rule types
+warn_list:
+  - experimental  # Experimental rules
+  - package-latest  # Warning for package: state=latest
+
+# Configure specific rules
+rules:
+  line-length:
+    max: 120
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+
+# Enable offline mode to avoid network calls
+offline: false
+
+# Profile to use
+profile: production

@@ -1,0 +1,45 @@
+---
+# .yamllint
+extends: default
+
+rules:
+  # Allow longer lines
+  line-length:
+    max: 120
+    level: warning
+
+  # Allow truthy values
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']
+    check-keys: false
+
+  # Allow empty values
+  empty-values:
+    forbid-in-block-mappings: false
+    forbid-in-flow-mappings: false
+
+  # Allow comments
+  comments:
+    min-spaces-from-content: 1
+
+  # Indentation
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Brackets
+  brackets:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+
+  # Braces
+  braces:
+    min-spaces-inside: 0
+    max-spaces-inside: 1
+
+ignore: |
+  .tox/
+  .cache/
+  molecule/
+  .github/
