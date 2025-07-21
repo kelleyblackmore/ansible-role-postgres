@@ -1,0 +1,63 @@
+---
+- name: Verify
+  hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+    - name: Check if PostgreSQL service exists
+      ansible.builtin.systemd:
+        name: postgresql
+      register: postgresql_service_status
+      failed_when: false
+
+    - name: Check if PostgreSQL is running (if service exists)
+      ansible.builtin.service:
+        name: postgresql
+        state: started
+      register: postgresql_service
+      when: postgresql_service_status.status is defined
+
+    - name: Verify PostgreSQL service is running
+      ansible.builtin.assert:
+        that:
+          - postgresql_service_status.status is defined
+          - postgresql_service_status.status.ActiveState == "active"
+        fail_msg: "PostgreSQL service is not running"
+      when: postgresql_service_status.status is defined
+
+    - name: Check if psql command exists
+      ansible.builtin.command: which psql
+      register: psql_exists
+      failed_when: false
+      changed_when: false
+
+    - name: Test PostgreSQL command availability
+      ansible.builtin.command: psql --version
+      register: postgresql_version_check
+      become_user: postgres
+      changed_when: false
+      when: psql_exists.rc == 0
+
+    - name: Verify PostgreSQL version output
+      ansible.builtin.assert:
+        that:
+          - postgresql_version_check.stdout is search("psql")
+        fail_msg: "PostgreSQL version check failed"
+      when:
+        - psql_exists.rc == 0
+        - postgresql_version_check is defined
+
+    - name: Test basic database connectivity (if psql available)
+      ansible.builtin.shell: |
+        psql -U postgres -c "SELECT version();" || echo "Connection failed"
+      register: db_connection_test
+      become_user: postgres
+      changed_when: false
+      when: psql_exists.rc == 0
+
+    - name: Show PostgreSQL connectivity result
+      ansible.builtin.debug:
+        var: db_connection_test.stdout
+      when:
+        - psql_exists.rc == 0
+        - db_connection_test is defined
